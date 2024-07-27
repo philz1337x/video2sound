@@ -19,6 +19,19 @@ class Predictor(BasePredictor):
         video: Path = Input(
             description="Provide a video file to generate audio from."
         ),
+        prompt: str = Input(
+            description="Provide a prompt for the model to generate audio from.",
+            default=""
+        ),
+        nprompt: str = Input(
+            description="Provide a negative prompt for the model to generate audio from.",
+            default=""
+        ),
+        seed: int = Input(
+            description="Provide a seed for the model to generate audio from.",
+            default=1337
+        ),
+        
 
     ) -> list[Path]:
         """Run a single prediction on the model"""
@@ -41,6 +54,9 @@ class Predictor(BasePredictor):
         command_parts = [
             "python3 inference.py",
             f"--input=\"{video}\"",
+            f"--prompt=\"{prompt}\"",
+            f"--nprompt=\"{nprompt}\"",
+            f"--seed={seed}",
             f"--save_dir=\"{final_output_folder}\"",
         ]
 
